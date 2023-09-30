@@ -10,6 +10,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('/api/v1');
   app.enableCors();
+
+  const config = app.get<ConfigService>(ConfigService);
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -20,6 +23,7 @@ async function bootstrap() {
   const pkg = JSON.parse(
     await promises.readFile(join('.', 'package.json'), 'utf8'),
   );
+
   const options = new DocumentBuilder()
     .setTitle('API')
     .setDescription('API description')
@@ -27,7 +31,7 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
-  const configService = app.get(ConfigService);
-  await app.listen(+configService.get('PORT'));
+
+  await app.listen(+config.get('PORT'));
 }
 bootstrap();
