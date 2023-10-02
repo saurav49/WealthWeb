@@ -9,11 +9,6 @@ export class AuthController {
     this.authService.signInUser();
   }
 
-  @Post('/signup')
-  signUpUser() {
-    this.authService.signUpUser();
-  }
-
   @Post('/refresh')
   refreshToken() {
     this.authService.refreshToken();
