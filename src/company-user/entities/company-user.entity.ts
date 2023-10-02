@@ -1,11 +1,12 @@
 import { Exclude } from 'class-transformer';
+import { Company } from 'src/company/entities/company.entity';
 import { EmailInviteStatus } from 'src/constants/enums';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  //   ManyToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -34,10 +35,11 @@ export class CompanyUser {
   })
   emailInviteStatus: string;
 
-  // @ManyToOne(() => CompanyUser, (company) => company.companyUsers, {
-  //     onDelete: 'CASCADE',
-  //     cascade: ['remove, ''soft-remove']
-  // })
+  @ManyToOne(() => Company, (company) => company.companyUsers, {
+    onDelete: 'CASCADE',
+    cascade: ['remove', 'soft-remove'],
+  })
+  company: Company;
 
   @Column({ type: 'uuid' })
   companyId: string;
