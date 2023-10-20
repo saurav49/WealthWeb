@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { CompanyUser } from './entities/company-user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateCompanyUserDto } from './dto/create-company-user.dto';
+import { JwtPayload } from 'src/auth/auth.interface';
 
 @Injectable()
 export class CompanyUserService {
@@ -12,7 +13,15 @@ export class CompanyUserService {
   ) {}
   async createCompanyUser(createCompanyUserDto: CreateCompanyUserDto) {
     try {
-      await this.companyUserRepository.save(createCompanyUserDto);
+      const user = await this.companyUserRepository.save(createCompanyUserDto);
+      try {
+        const jwtPayload: JwtPayload = {
+          role: Role.Company,
+          email: user.email,
+          companyId: user.companyId,
+        };
+        await this.authService;
+      } catch (error) {}
     } catch (error) {}
   }
 }

@@ -7,11 +7,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CompanyUserModule } from './company-user/company-user.module';
 import { CompanyModule } from './company/company.module';
 import typeormConfig from './config/typeorm.config';
+import { MailerModule } from '@nestjs-modules/mailer';
 @Module({
   imports: [
+    MailerModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [typeormConfig],
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',
+      },
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

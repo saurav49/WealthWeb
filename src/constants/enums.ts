@@ -4,3 +4,8 @@ export enum EmailInviteStatus {
   INVITED = 'invited',
   ACCEPTED = 'accepted',
 }
+
+export enum Role {
+  'Company' = 'company',
+  'Investor' = 'investor',
+}
